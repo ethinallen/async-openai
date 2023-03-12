@@ -3,17 +3,22 @@ use async_openai::{
     Client,
 };
 use std::error::Error;
+use std::env;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn Error>> {
+
+    for (n,v) in env::vars() {
+        println!("{}: {}", n,v);
+    }
     // create client, reads OPENAI_API_KEY environment variable for API key.
     let client = Client::new();
 
     let request = CreateImageRequestArgs::default()
-        .prompt("cats on sofa and carpet in living room")
+        .prompt("four lads sitting in the virtual ether. it's a water color of their souls floating in a bath of light. The abyss surrounds them and yet in each other's company the four of them sit vibrantly across from one another.")
         .n(2)
         .response_format(ResponseFormat::Url)
-        .size(ImageSize::S256x256)
+        .size(ImageSize::S512x512)
         .user("async-openai")
         .build()?;
 
